@@ -679,6 +679,17 @@ it('Request#parse overrides body parser no matter Content-Type', function(done){
   });
 });
 
+it('should support req.responseType(..)', function(next){
+    request
+    .get('/foo')
+    .responseType('arraybuffer')
+    .on('request', function(req){
+        assert('arraybuffer' == req.xhr.responseType);
+        next();
+    })
+    .end();
+});
+
 // Don't run on browsers without xhr2 support
 if ('FormData' in window) {
   it('xhr2 download file', function(next) {
